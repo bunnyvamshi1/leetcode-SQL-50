@@ -1,0 +1,14 @@
+with cte1 as(
+
+select c.customer_id,c.product_key,count(*) as count
+from customer c
+join product p on p.product_key=c.product_key
+group by customer_id,product_key
+
+)
+select customer_id
+from cte1
+group by customer_id
+having count(*)>=(select count(*) from product)
+
+
