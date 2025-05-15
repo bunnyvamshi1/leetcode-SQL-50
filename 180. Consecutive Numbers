@@ -1,0 +1,11 @@
+with cte as(
+
+    select id,num,
+    lag(num) over() as lastvalue,
+    lead(num) over() as nextvalue
+     from logs
+)
+select distinct num as consecutivenums
+from cte
+where num=lastvalue and num=nextvalue
+       
