@@ -1,0 +1,10 @@
+with cte as(
+
+    select class,count(*) as count
+    from courses
+    group by class
+)
+select class
+from cte
+where count>=5
+
