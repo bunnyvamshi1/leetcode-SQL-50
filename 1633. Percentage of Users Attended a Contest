@@ -1,0 +1,15 @@
+
+with dis as(
+
+    select contest_id,count(*) as cnt
+    from register
+    group by contest_id
+
+)
+, total as(
+    select count(*) as total
+    from users
+) 
+select d.contest_id,round(((d.cnt/t.total)*100),2) as percentage
+from dis d,total t
+order by round(((d.cnt/t.total)*100),2) desc , d.contest_id 
