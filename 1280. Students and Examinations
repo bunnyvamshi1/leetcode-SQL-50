@@ -1,0 +1,22 @@
+
+with attended as(
+    select student_id,subject_name,count(*) as attended_exams
+    from  examinations 
+    group by student_id,subject_name
+), cross_join as(
+    select s.student_id,s.student_name,sub.subject_name
+    from students s
+    cross join subjects sub
+),res as (
+select c.student_id,c.student_name,c.subject_name,a.attended_exams
+from cross_join c
+left join attended a on a.student_id=c.student_id and a.subject_name=c.subject_name
+)
+select student_id,student_name,subject_name,
+    case 
+       when attended_exams is null then 0
+       else attended_exams
+    end as attended_exams
+from res
+order by student_id , subject_name
+
